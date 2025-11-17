@@ -50,8 +50,8 @@
       >
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-        <li class="nav-item menu-open">
-          <a href="#" class="nav-link active">
+        <li class="nav-item {{ (moduleName == 'dashboard' || moduleName == 'dashboard2' || moduleName == 'dashboard3') && 'menu-open'}}">
+          <a href="#" class="nav-link {{ (moduleName == 'dashboard' || moduleName == 'dashboard2' || moduleName == 'dashboard3') && 'active'}}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -80,11 +80,11 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="pages/widgets.html" class="nav-link">
+          <a [routerLink]="['/mahasiswa']" routerLinkActive="router-link-activate" class="nav-link {{moduleName == 'mahasiswa' ? 'active' : ''}}">
             <i class="nav-icon fas fa-th"></i>
             <p>
-              Widgets
-              <span class="right badge badge-danger">New</span>
+              Mahasiswa
+              <!-- <span class="right badge badge-danger">New</span> -->
             </p>
           </a>
         </li>
