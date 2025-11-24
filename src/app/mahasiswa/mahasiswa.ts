@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Renderer2 } from '@angular/core';
-import { Header } from "../header/header";
-import { Sidebar } from "../sidebar/sidebar";
-import { Footer } from "../footer/footer";
+import { Header } from '../header/header';
+import { Sidebar } from '../sidebar/sidebar';
+import { Footer } from '../footer/footer';
 import { HttpClient } from '@angular/common/http';
 
 declare const $: any;
@@ -18,78 +18,82 @@ export class Mahasiswa implements AfterViewInit {
   constructor(private httpClient: HttpClient, private renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
+    this.renderer.removeClass(document.body, 'sidebar-open');
+    this.renderer.addClass(document.body, 'sidebar-closed');
+    this.renderer.addClass(document.body, 'sidebar-collapse');
 
-    this.renderer.removeClass(document.body, "sidebar-open");
-    this.renderer.addClass(document.body, "sidebar-closed");
-    this.renderer.addClass(document.body, "sidebar-collapse");
-
-    this.table1 = $("#table1").DataTable();
+    this.table1 = $('#table1').DataTable();
     this.bindMahasiswa();
   }
 
-  bindMahasiswa(): void{
-    this.httpClient.get("https://stmikpontianak.cloud/011100862/tampilMahasiswa.php").subscribe((data: any) => {
-      // console.table(data);
-      data.forEach((element: any) => {
-        var tempatTanggalLahir = element.TempatLahir + ", " + element.TanggalLahir;
+  bindMahasiswa(): void {
+    this.httpClient
+      .get('https://stmikpontianak.cloud/011100862/tampilMahasiswa.php')
+      .subscribe((data: any) => {
+        // console.table(data);
+        data.forEach((element: any) => {
+          var tempatTanggalLahir = element.TempatLahir + ', ' + element.TanggalLahir;
 
-        const jenisKelaminFormatted = element.JenisKelamin + " " + (
-          (element.jenisKelamin == "Perempuan" || element.JenisKelamin == "perempuan" ?
-           "<i class='fas fa-venus text-danger'></i>" :
-           (element.jenisKelamin != "undefined") ?
-           "<i class='fas fa-mars text-primary'></i>" : ""
-          )
-        );
+          const jenisKelaminFormatted =
+            element.JenisKelamin +
+            ' ' +
+            (element.jenisKelamin == 'Perempuan' || element.JenisKelamin == 'perempuan'
+              ? "<i class='fas fa-venus text-danger'></i>"
+              : element.jenisKelamin != 'undefined'
+              ? "<i class='fas fa-mars text-primary'></i>"
+              : '');
 
-        var row = [
-          element.NIM, element.Nama,
-          jenisKelaminFormatted, tempatTanggalLahir,
-          element.JP,
-          element.Alamat,
-          element.StatusNikah,
-          element.TahunMasuk
-        ];
-        this.table1.row.add(row);
+          var row = [
+            element.NIM,
+            element.Nama,
+            jenisKelaminFormatted,
+            tempatTanggalLahir,
+            element.JP,
+            element.Alamat,
+            element.StatusNikah,
+            element.TahunMasuk,
+          ];
+          this.table1.row.add(row);
+        });
+        this.table1.draw(false);
       });
-      this.table1.draw(false);
-    });
   }
   showTambahModal(): void {
-    $("#tambahModal").modal();
+    $('#tambahModal').modal();
   }
   postRecord(): void {
-    var alamat = $("#alamatText").val();
-    var jenisKelamin = $("#jenisKelaminText").val();
-    var jp = $("#jpText").val();
-    var nama = $("#namaText").val();
-    var nim = $("#nimText").val();
-    var statusNikah = $("#statusNikahText").val();
-    var tahunMasuk = $("#tahunMasukText").val();
-    var tanggalLahir = $("#tanggalLahirText").val();
-    var tempatLahir = $("#tempatLahirText").val();
+    var alamat = $('#alamatText').val();
+    var jenisKelamin = $('#jenisKelaminSelect').val();
+    var jp = $('#jpSelect').val();
+    var nama = $('#namaText').val();
+    var nim = $('#nimText').val();
+    var statusNikah = $('#statusNikahSelect').val();
+    var tahunMasuk = $('#tahunMasukText').val();
+    var tanggalLahir = $('#tanggalLahirText').val();
+    var tempatLahir = $('#tempatLahirText').val();
 
     if (nim.length == 0) {
-      alert("Nim belum diisi");
+      alert('Nim belum diisi');
       return;
     }
     if (nama.length == 0) {
-      alert("Nama belum diisi");
+      alert('Nama belum diisi');
       return;
     }
     if (tempatLahir.length == 0) {
-      alert("Tempat Lahir belum diisi");
+      alert('Tempat Lahir belum diisi');
       return;
     }
     if (tanggalLahir.length == 0) {
-      alert("Tanggal Lahir belum diisi");
+      alert('Tanggal Lahir belum diisi');
       return;
     }
     if (tahunMasuk.length == 0) {
-      alert("Tahun Masuk belum diisi");
+      alert('Tahun Masuk belum diisi');
       return;
     }
     if (alamat.length == 0) {
-      alert("Alamat belum diisi");
+      alert('Alamat belum diisi');
       return;
     }
 
@@ -103,23 +107,43 @@ export class Mahasiswa implements AfterViewInit {
     tanggalLahir = encodeURIComponent(tanggalLahir);
     tempatLahir = encodeURIComponent(tempatLahir);
 
-    var url = "https://stmikpontianak.cloud/011100862/tambahMahasiswa.php" +
-    "?alamat=" + alamat +
-    "&jenisKelamin=" + jenisKelamin +
-    "&jp=" + jp +
-    "&nama=" + nama +
-    "&nim=" + nim +
-    "&statusNikah=" + statusNikah +
-    "&tahunMasuk=" + tahunMasuk +
-    "&tanggalLahir=" + tanggalLahir +
-    "&tempatLahir=" + tempatLahir;
+    // console.log('alamat=' + alamat);
+    // console.log('jenisKelamin=' + jenisKelamin);
+    // console.log('jp=' + jp);
+    // console.log('nama=' + nama);
+    // console.log('nim=' + nim);
+    // console.log('statusPernikahan=' + statusNikah);
+    // console.log('tahunMasuk=' + tahunMasuk);
+    // console.log('tanggalLahir=' + tanggalLahir);
+    // console.log('tempatLahir=' + tempatLahir);
+
+    var url =
+      'https://stmikpontianak.cloud/011100862/tambahMahasiswa.php' +
+      '?alamat=' +
+      alamat +
+      '&jenisKelamin=' +
+      jenisKelamin +
+      '&jp=' +
+      jp +
+      '&nama=' +
+      nama +
+      '&nim=' +
+      nim +
+      '&statusPernikahan=' +
+      statusNikah +
+      '&tahunMasuk=' +
+      tahunMasuk +
+      '&tanggalLahir=' +
+      tanggalLahir +
+      '&tempatLahir=' +
+      tempatLahir;
 
     this.httpClient.get(url).subscribe((data: any) => {
       console.log(data);
-      alert(data.status + " --> " + data.message);
+      alert(data.status + ' --> ' + data.message);
 
       this.bindMahasiswa();
-      $("#tambahModal").modal("hide");
+      $('#tambahModal').modal('hide');
     });
   }
 }
