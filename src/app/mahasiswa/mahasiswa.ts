@@ -18,9 +18,7 @@ export class Mahasiswa implements AfterViewInit {
   constructor(private httpClient: HttpClient, private renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
-    this.renderer.removeClass(document.body, 'sidebar-open');
-    this.renderer.addClass(document.body, 'sidebar-closed');
-    this.renderer.addClass(document.body, 'sidebar-collapse');
+
 
     this.table1 = $('#table1').DataTable();
     this.bindMahasiswa();

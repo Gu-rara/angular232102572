@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Renderer2 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -9,4 +9,10 @@ import { RouterModule } from '@angular/router';
 })
 export class Sidebar {
   @Input() moduleName: string = "";
+  constructor(private renderer: Renderer2) {}
+  ngAfterViewInit() {
+    this.renderer.removeClass(document.body, 'sidebar-open');
+    this.renderer.addClass(document.body, 'sidebar-closed');
+    this.renderer.addClass(document.body, 'sidebar-collapse');
+  }
 }
