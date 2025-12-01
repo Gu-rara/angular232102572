@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Header } from '../header/header';
 import { Sidebar } from '../sidebar/sidebar';
 import { Footer } from '../footer/footer';
@@ -10,12 +10,18 @@ import { Footer } from '../footer/footer';
   styleUrl: './dashboard2.css'
 })
 export class Dashboard2 implements OnInit {
+  constructor(private renderer: Renderer2) {}
+  ngAfterViewInit() {
+    this.renderer.removeClass(document.body, 'sidebar-open');
+    this.renderer.addClass(document.body, 'sidebar-closed');
+    this.renderer.addClass(document.body, 'sidebar-collapse');
+  }
   ngOnInit(): void {
     console.log("Dashboard 2 Component Loaded!");
-    const existingScript = document.querySelector('script[src="dist/js/pages/dashboard2.js"]');
-    if(existingScript){
-      existingScript.remove();
-    }
+    //dist/js/adminlte.js
+    document.body.querySelectorAll('script[src="/dist/js/pages/dashboard.js"]').forEach(el => el.remove());
+    document.body.querySelectorAll('script[src="/dist/js/pages/dashboard2.js"]').forEach(el => el.remove());
+    document.body.querySelectorAll('script[src="/dist/js/pages/dashboard3.js"]').forEach(el => el.remove());
     const script = document.createElement('script');
     script.src = '/dist/js/pages/dashboard2.js';
     script.async = false;
