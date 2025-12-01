@@ -18,11 +18,6 @@ constructor(
     private cookieService: CookieService,
     private router: Router
   ) {}
-    ngAfterViewInit() {
-      this.renderer.removeClass(document.body, 'sidebar-open');
-      this.renderer.addClass(document.body, 'sidebar-closed');
-      this.renderer.addClass(document.body, 'sidebar-collapse');
-    }
 
   showPeringatanModal(message: string) {
     $("#peringatanModal").modal();
