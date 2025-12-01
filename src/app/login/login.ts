@@ -1,5 +1,9 @@
 import { Component, Renderer2 } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpClient } from '@angular/common/http';
+
+declare const $: any;
 
 @Component({
   selector: 'app-login',
@@ -8,12 +12,42 @@ import { RouterModule } from '@angular/router';
   styleUrl: './login.css'
 })
 export class Login {
-  constructor (private renderer: Renderer2) {
-    this.renderer.addClass(document.body, "login-page");
+constructor(private renderer: Renderer2, private router: Router, private cookieService: CookieService, private http: HttpClient) {}
+    ngAfterViewInit() {
+      this.renderer.removeClass(document.body, 'sidebar-open');
+      this.renderer.addClass(document.body, 'sidebar-closed');
+      this.renderer.addClass(document.body, 'sidebar-collapse');
+    }
 
-    this.renderer.removeClass(document.body, "sidebar-mini");
-    this.renderer.removeClass(document.body, "layout-fixed");
+  showPeringatanModal(message: string) {
+    $("#peringatanModal").modal();
+    $("#pm_message").html(message);
+  }
 
-    this.renderer.setAttribute(document.body, "style", "min-height: 464px;");
+  signIn(): void {
+    console.log("signIn()");
+
+    var userId = $('#idText').val();
+    userId = encodeURIComponent(userId as string);
+    var password = $('#passwordText').val();
+    password = encodeURIComponent(password as string);
+
+    var url = "https://stmikpontianak.cloud/011100862/login.php" +
+    "?id=" + userId +
+    "&password=" + password;
+    console.log("URL: " + url);
+
+    this.http.get(url).subscribe((data: any) => {
+      console.log("Response:", data);
+
+      var row = data[0];
+      if(row.idCount != "1") {
+        this.showPeringatanModal("ID atau Password salah!");
+        return;
+      }
+      this.cookieService.set('userId', userId as string);
+      console.log("Session data berhasil dibuat");
+      this.router.navigate(['/dashboard']);
+    });
   }
 }
