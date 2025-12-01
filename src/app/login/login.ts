@@ -28,9 +28,9 @@ constructor(private renderer: Renderer2, private router: Router, private cookieS
     console.log("signIn()");
 
     var userId = $('#idText').val();
-    userId = encodeURIComponent(userId as string);
+    userId = encodeURIComponent(userId);
     var password = $('#passwordText').val();
-    password = encodeURIComponent(password as string);
+    password = encodeURIComponent(password);
 
     var url = "https://stmikpontianak.cloud/011100862/login.php" +
     "?id=" + userId +
@@ -45,7 +45,7 @@ constructor(private renderer: Renderer2, private router: Router, private cookieS
         this.showPeringatanModal("ID atau Password salah!");
         return;
       }
-      this.cookieService.set('userId', userId as string);
+      this.cookieService.set('userId', userId);
       console.log("Session data berhasil dibuat");
       this.router.navigate(['/dashboard']);
     });
