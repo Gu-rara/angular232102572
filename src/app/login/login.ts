@@ -12,7 +12,12 @@ declare const $: any;
   styleUrl: './login.css'
 })
 export class Login {
-constructor(private renderer: Renderer2, private router: Router, private cookieService: CookieService, private http: HttpClient) {}
+constructor(
+    private renderer: Renderer2,
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private router: Router
+  ) {}
     ngAfterViewInit() {
       this.renderer.removeClass(document.body, 'sidebar-open');
       this.renderer.addClass(document.body, 'sidebar-closed');
