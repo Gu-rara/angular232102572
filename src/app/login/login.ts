@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,7 @@ declare const $: any;
 })
 export class Login {
 constructor(
-    private renderer: Renderer2,
+    //private renderer: Renderer2,
     private http: HttpClient,
     private cookieService: CookieService,
     private router: Router
