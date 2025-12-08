@@ -45,7 +45,11 @@ export class Forex implements AfterViewInit {
         for (const currencies in rates) {
           const currencyName = currenciesData[currencies];
 
-          const rate = rates.IDR / rates[currencies];
+          var rate = rates.IDR / rates[currencies];
+          //check if its rate idr, then don't divide
+          if (currencies === 'IDR') {
+            rate = rates.IDR;
+          }
           const formatRate = formatCurrency(rate, 'en-US', '', currencies);
 
           console.log(`${currencies} - ${currencyName} : ${formatRate}`);
