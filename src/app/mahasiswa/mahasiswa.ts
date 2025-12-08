@@ -18,8 +18,6 @@ export class Mahasiswa implements AfterViewInit {
   constructor(private httpClient: HttpClient, private renderer: Renderer2) {}
 
   ngAfterViewInit(): void {
-
-
     this.table1 = $('#table1').DataTable();
     this.bindMahasiswa();
   }

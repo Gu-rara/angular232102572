@@ -25,7 +25,6 @@ constructor(
   }
 
   signIn(): void {
-    console.log("signIn()");
 
     var userId = $('#idText').val();
     userId = encodeURIComponent(userId);

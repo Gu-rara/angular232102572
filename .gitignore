@@ -37,6 +37,9 @@ yarn-error.log
 testem.log
 /typings
 
+# Ignore environment files
+/src/environments/environment.secret.ts
+
 # System files
 .DS_Store
 Thumbs.db
