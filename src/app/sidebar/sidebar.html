@@ -106,6 +106,15 @@
           </a>
         </li>
         <li class="nav-item">
+          <a [routerLink]="['/cuaca']" routerLinkActive="router-link-activate" class="nav-link {{moduleName == 'cuaca' ? 'active' : ''}}">
+            <i class="nav-icon fas fa-cloud-sun"></i>
+            <p>
+              Cuaca
+              <!-- <span class="right badge badge-danger">New</span> -->
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="" class="nav-link" (click)="toggleTheme(); $event.preventDefault()">
             <i class="nav-icon fas fa-adjust"></i>
             <p>

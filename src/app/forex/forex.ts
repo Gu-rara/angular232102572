@@ -3,7 +3,7 @@ import { AfterViewInit, Component, Renderer2 } from '@angular/core';
 import { Header } from '../header/header';
 import { Sidebar } from '../sidebar/sidebar';
 import { Footer } from '../footer/footer';
-import { environment } from '../../environments/environment';
+import { secret } from '../../environments/environment.secret';
 import { formatCurrency } from '@angular/common';
 
 declare const $: any;
@@ -33,7 +33,7 @@ export class Forex implements AfterViewInit {
 
   BindTable(): void {
     console.log("BindTable Forex");
-    const ratesUrl = `https://openexchangerates.org/api/latest.json?app_id=${environment.appId}`;
+    const ratesUrl = `https://openexchangerates.org/api/latest.json?app_id=${secret.app_id}`;
 
     const currenciesUrl = "https://openexchangerates.org/api/currencies.json";
     this.httpClient.get(currenciesUrl).subscribe((currenciesData: any) => {
