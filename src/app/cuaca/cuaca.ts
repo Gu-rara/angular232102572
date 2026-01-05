@@ -5,6 +5,7 @@ import { Sidebar } from '../sidebar/sidebar';
 import { Footer } from '../footer/footer';
 import { secret } from '../../environments/environment.secret';
 import { CommonModule } from '@angular/common';
+import * as L from 'leaflet';
 
 declare const $: any;
 declare const moment: any;
@@ -20,6 +21,7 @@ export class Cuaca implements AfterViewInit {
   currentWeather: any;
   cityData: any;
   todayDate: string = '';
+  map: L.Map | null = null;
 
   constructor(private renderer: Renderer2, private http: HttpClient) {}
   ngAfterViewInit() {
@@ -28,6 +30,8 @@ export class Cuaca implements AfterViewInit {
     this.renderer.removeClass(document.body, 'sidebar-open');
     this.renderer.addClass(document.body, 'sidebar-closed');
     this.renderer.addClass(document.body, 'sidebar-collapse');
+
+    this.getData('pontianak');
   }
 
   // Initialize DataTable when the table is present. Safe to call multiple times.
@@ -79,6 +83,21 @@ export class Cuaca implements AfterViewInit {
     }
   }
 
+  private initMap(lat: number, lon: number): void {
+    if(this.map){
+      this.map.remove();
+    }
+
+    //L = lauflet
+    this.map = L.map('map-container').setView([lat, lon], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Copyright © OpenStreetMap contributors'
+    }).addTo(this.map);
+
+    L.marker([lat, lon]).addTo(this.map).bindPopup(this.cityData.name).openPopup();
+  }
+
   getData(cityName: string) : void{
     cityName = encodeURIComponent(cityName);
     const url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${secret.app_id2}`;
@@ -95,6 +114,10 @@ export class Cuaca implements AfterViewInit {
       } catch (e) {
         this.todayDate = new Date().toLocaleDateString();
       }
+
+      setTimeout(() => {
+        this.initMap(this.cityData.coord.lat, this.cityData.coord.lon);
+      }, 100);
 
       console.log(list);
 
